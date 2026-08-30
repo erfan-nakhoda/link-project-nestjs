@@ -1,16 +1,19 @@
 import { Module } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthGuard } from "../auth/guard/auth.guard";
-import { GroupEntity } from "../groups/entities/group.entity";
-import { UserEntity } from "../users/entities/user.entity";
 import { LinkEntity } from "./entities/link.entity";
 import { LinksController } from "./links.controller";
 import { LinksService } from "./links.service";
+import { LinkUserEntity } from "./entities/link-user.entity";
+import { GroupEntity } from "../groups/entities/group.entity";
+import { UserEntity } from "../users/entities/user.entity";
+import { AuthGuard } from "../../common/guard/auth.guard";
+import { JwtService } from "@nestjs/jwt";
+import { JwtAuthService } from "../auth/jwt.service";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([LinkEntity, GroupEntity, UserEntity])],
+    imports: [TypeOrmModule.forFeature([LinkEntity, LinkUserEntity, GroupEntity, UserEntity])],
     controllers: [LinksController],
-    providers: [LinksService, AuthGuard, JwtService],
+    providers: [LinksService, JwtAuthService, AuthGuard],
+    exports : [TypeOrmModule, LinksService]
 })
 export class LinksModule {}

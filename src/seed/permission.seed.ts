@@ -13,7 +13,7 @@ export class PermissionSeed {
     async run() {
         const admin = await this.roleRepo.findOneBy({ name: "ADMIN" });
         if (!admin) return;
-        for (const name of ["USER:READ", "USER:WRITE", "RBAC:READ", "RBAC:WRITE"]) {
+        for (const name of ["USER:READ", "USER:WRITE", "RBAC:READ", "RBAC:WRITE", 'USER.ACTIVITY']) {
             if (!(await this.permissionRepo.findOneBy({ name }))) {
                 await this.permissionRepo.save(this.permissionRepo.create({ name, roleId: admin.id }));
             }

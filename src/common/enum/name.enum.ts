@@ -3,5 +3,7 @@ export enum EntityNames {
     roles = "roles",
     permissions = "permissions",
     links = "links",
-    groups = "groups"
+    groups = "groups",
+    groupUser = "group-user",
+    linkUser = "link-user",
 }

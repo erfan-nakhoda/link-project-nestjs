@@ -10,11 +10,15 @@ import { UserModule } from 'src/modules/users/user.module';
 import { LinksModule } from 'src/modules/links/links.module';
 import { GroupsModule } from 'src/modules/groups/groups.module';
 import { SeedModule } from 'src/seed/seed.module';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal : true
-  }), TypeOrmModule.forRoot(TypeOrmConfig()), RBACModule, AuthModule, UserModule, LinksModule, GroupsModule, SeedModule],
+  }), TypeOrmModule.forRoot(TypeOrmConfig()),JwtModule.register({
+    global : true,
+    secret : process.env.JWT_SECRET
+  }), RBACModule, AuthModule, UserModule, LinksModule, GroupsModule, SeedModule],
   controllers: [AppController],
   providers: [AppService],
 })

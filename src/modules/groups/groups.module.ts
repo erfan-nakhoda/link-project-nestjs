@@ -1,15 +1,17 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { AuthGuard } from "../auth/guard/auth.guard";
-import { JwtService } from "@nestjs/jwt";
 import { GroupEntity } from "./entities/group.entity";
 import { GroupsController } from "./groups.controller";
 import { GroupsService } from "./groups.service";
 import { UserEntity } from "../users/entities/user.entity";
+import { AuthGuard } from "../../common/guard/auth.guard";
+import { JwtService } from "@nestjs/jwt";
+import { JwtAuthService } from "../auth/jwt.service";
 
 @Module({
     imports: [TypeOrmModule.forFeature([GroupEntity, UserEntity])],
     controllers: [GroupsController],
-    providers: [GroupsService, AuthGuard, JwtService],
+    providers: [GroupsService, JwtAuthService, AuthGuard],
+    exports : [TypeOrmModule, GroupsService]
 })
 export class GroupsModule {}
